@@ -33,6 +33,20 @@ export class HomePage {
       url: 'https://metabase.tdksoftconsulting.de',
       icon: 'MB',
       cta: 'Open'
+    },
+        {
+      title: 'Egotherapie - PORTAL',
+      description: 'Zugang zu Ergotherapeute -Ressourcen und internen Management.</',
+      url: 'https://ergo-maffo.tdksoftconsulting.de',
+      icon: 'TA',
+      cta: 'Open'
+    },
+    {
+      title: 'Medizinische Mission',
+      description: 'Verwaltung der Patientenakten und medizinische Nachverfolgung via OpenMRS.',
+      url: 'https://medmission.tdksoftconsulting.de',
+      icon: 'MB',
+      cta: 'Open'
     }
   ];
 }
