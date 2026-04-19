@@ -1,5 +1,3 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -13,13 +11,20 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    // --- Additions for 10/10 Standard --- /
+    "noUnusedLocals": true, // Prevents unused local variables
+    "noUnusedParameters": true, // Prevents unused function parameters
+    "forceConsistentCasingInFileNames": true, // Avoids bugs between Windows (case-insensitive) and Linux (case-sensitive)
+    "baseUrl": "./", // Simplifies relative imports
+    "moduleResolution": "bundler" // Modern standard for Angular with Vite/Esbuild
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true, // Type-checks even your HTML files!
+    "strictInputTypes": true // Very important for @Input() type safety
   },
   "files": [],
   "references": [
