@@ -7,20 +7,18 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    #nginx.ingress.kubernetes.io/proxy-body-size: "100m"
-
 spec:
   tls:
   - hosts:
     - tdksoftconsulting.de
     - www.tdksoftconsulting.de
-    secretName: tdk-cockpit-tls-cert # Name of the secret that will contain the certificate
+    secretName: tdk-cockpit-tls-cert
   rules:
   - host: tdksoftconsulting.de
     http:
       paths:
       - path: /
-        pathType: Prefix
+        pathType: Prefix # Corrected: Capital P
         backend:
           service:
             name: tdk-cockpit-service
@@ -28,11 +26,11 @@ spec:
               number: 80
   - host: www.tdksoftconsulting.de
     http:
-       paths:
-       - path: /
-         pathType: prefix
-         backend:
+      paths:
+      - path: /
+        pathType: Prefix # Corrected: Capital P
+        backend:
           service:
-            name: www.tdksoftconsulting.de
+            name: tdk-cockpit-service # Corrected: Use the actual service name, not the URL
             port:
               number: 80
