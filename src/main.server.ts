@@ -6,6 +6,7 @@ import { config } from './app/app.config.server';
  * Server-side bootstrap function.
  * Angular injects the BootstrapContext automatically.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function bootstrap(context: any) {
   return bootstrapApplication(AppComponent, config, context);
 }

@@ -1,17 +1,15 @@
 <app-layout>
-
   <app-hero
     [title]="'Ihr Digitales Ökosystem.'"
-    [subtitle]="'Zentraler Zugang zu unseren sicherheitskritischen Anwendungen und Analyse-Plattformen.'">
+    [subtitle]="'Zentraler Zugang zu unseren sicherheitskritischen Anwendungen und Analyse-Plattformen.'"
+  >
   </app-hero>
 
   <section class="services">
     <div class="grid">
-      <app-service-card
-        *ngFor="let service of services"
-        [service]="service">
-      </app-service-card>
+      @for (service of services; track service) {
+        <app-service-card [service]="service"> </app-service-card>
+      }
     </div>
   </section>
-
 </app-layout>
