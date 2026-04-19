@@ -9,12 +9,11 @@
 # https://github.com/docker/awesome-compose
 services:
   app:
-    build:
-      context: .
-      target: runner
+    image: tdksoft341/tdkportal-cokpit:latest
     # If your application exposes a port, uncomment the following lines and change
     # the port numbers as needed. The first number is the host port and the second
     # is the port inside the container.
+    pull_policy: if_not_present
     ports:
       - 8080:8080
 
