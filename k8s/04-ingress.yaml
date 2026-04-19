@@ -29,9 +29,9 @@ spec:
   - host: www.tdksoftconsulting.de
     http:
        paths:
-      - path: /
-        pathType: prefix
-        backend:
+       - path: /
+         pathType: prefix
+         backend:
           service:
             name: www.tdksoftconsulting.de
             port:
