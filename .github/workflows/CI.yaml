@@ -68,7 +68,7 @@ jobs:
 
   deploy:
       name: ☸️ Deploy to Kubernetes
-      needs: build-docker # On attend que l'image soit sur le Hub
+      needs: deploy-docker
       runs-on: ubuntu-latest
       steps:
         - name: 📝 Checkout code
