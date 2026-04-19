@@ -36,7 +36,7 @@ jobs:
   # SECOND JOB: Docker Build & Push
   deploy-docker:
     name: 🐳 Build & Push Docker
-    needs: build-and-test # Only runs if tests pass!
+    needs: build-and-test # Only runs if build and tests succeed!
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     runs-on: ubuntu-latest
     
@@ -60,7 +60,7 @@ jobs:
           push: true
           # Tag the image with 'latest' and the commit hash for traceability
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/mon-app-angular:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/mon-app-angular:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/tdkportal-cokpit:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/tdkportal-cokpit:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
