@@ -31,7 +31,8 @@ jobs:
         run: npm run lint
 
       - name: 🧪 Run unit tests
-        run: npm test -- --watch=false --passWithNoTests
+        run: npm test -- --watch=false --no-progress  
+        #--pass-with-no-tests
 
   # SECOND JOB: Docker Build & Push
   deploy-docker:
