@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tdk-cockpit-ingress
+  namespace: tdk-cockpit
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    #nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+
+spec:
+  tls:
+  - hosts:
+    - tdksoftconsulting.de
+    - www.tdksoftconsulting.de
+    secretName: tdk-cockpit-tls-cert # Name of the secret that will contain the certificate
+  rules:
+  - host: tdksoftconsulting.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tdk-cockpit-service
+            port:
+              number: 80
+  - host: www.tdksoftconsulting.de
+    http:
+       paths:
+      - path: /
+        pathType: prefix
+        backend:
+          service:
+            name: www.tdksoftconsulting.de
+            port:
+              number: 80

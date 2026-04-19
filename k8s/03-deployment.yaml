@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdk-cockpit
+  namespace: tdk-cockpit
+  labels:
+    app: tdk-cockpit
+    environment: production
+    managed-by: github-actions
+spec:
+  # High Availability: Always run at least 2 replicas to avoid downtime during node maintenance
+  replicas: 2 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      # Ensures zero downtime by creating new pods before killing old ones
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: tdk-cockpit
+  template:
+    metadata:
+      labels:
+        app: tdk-cockpit
+    spec:
+      # Security: Prevent the container from running as root user
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101 # Standard Nginx non-root user ID
+      
+      containers:
+      - name: tdk-cockpit
+        image: tdksoft341/tdkportal-cokpit:latest
+        imagePullPolicy: Always
+        
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+
+        # Resource Management: Prevents the "noisy neighbor" effect and OOM kills
+        resources:
+          requests:
+            cpu: "100m"      # Reserved CPU (0.1 core)
+            memory: "128Mi"  # Reserved Memory
+          limits:
+            cpu: "500m"      # Maximum CPU burst
+            memory: "256Mi"  # Maximum Memory limit
+
+        # Liveness Probe: Restarts the container if it freezes or crashes
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 20
+
+        # Readiness Probe: Ensures the pod only receives traffic when fully loaded
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
+        # Environment variables (if needed)
+        env:
+        - name: NODE_ENV
+          value: "production"

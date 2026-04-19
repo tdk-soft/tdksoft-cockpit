@@ -65,3 +65,26 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/tdkportal-cokpit:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+deploy:
+    name: 🚀 Deploy to Production
+    needs: deploy-docker # Only if  the image push to registry succeed.
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: 🚚 Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # On se déplace dans le dossier du projet
+            cd ~/app
+            # On télécharge la dernière image
+            docker compose pull
+            # On relance les containers sans coupure (ou presque)
+            docker compose up -d --remove-orphans
+            # Nettoyage des anciennes images inutilisées
+            docker image prune -f
